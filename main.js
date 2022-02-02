@@ -45,6 +45,7 @@ function mousePressed() {
             if(card.isInArea())
             {
                 draggedCard = card.getObject();
+                draggedCard.saveOldCoords();
                 draggedCard.mouseOffsetX = abs(mouseX - draggedCard.x);
                 draggedCard.mouseOffsetY = abs(mouseY - draggedCard.y);
             }
@@ -63,6 +64,7 @@ function mouseReleased() {
                 stack.addCard(draggedCard);
             }
         });
+        draggedCard.returnPrevPosition();
         draggedCard = null;
     }
         

@@ -37,6 +37,16 @@ class Card {
         }
     }
 
+    returnPrevPosition() {
+        this.x = this.oldX;
+        this.y = this.oldY;
+    }
+
+    saveOldCoords() {
+        this.oldX = this.x;
+        this.oldY = this.y;
+    }
+
     updateCoords() {
         this.x += (mouseX - this.x - this.mouseOffsetX) * 0.35;
         this.y += (mouseY - this.y - this.mouseOffsetY) * 0.35;
@@ -51,6 +61,7 @@ class Card {
     }
 
     getObject() {
+        this.saveOldCoords();
         return this;
     }
 
