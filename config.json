@@ -1,10 +1,10 @@
 {
     "app":
     {
-        "width": 1024,
-        "height": 600
+        "width": 1200,
+        "height": 750
     },
-    "colors":
+    "color":
     {
         "red": "#e66247",
         "black": "#181616",
@@ -14,9 +14,23 @@
     },
     "card":
     {
-        "width": 65,
-        "height": 80,
+        "width": 85,
+        "height": 110,
         "stroke": 1,
-        "round": 5
+        "round": 5,
+        "properties":
+        {
+            "textSize": 25,
+            "offset":
+            {
+                "x": 5,
+                "y": 5
+            },
+            "icon":
+            {
+                "width": 20,
+                "height": 20
+            }
+        }
     }
 }
