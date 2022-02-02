@@ -1,0 +1,22 @@
+{
+    "app":
+    {
+        "width": 1024,
+        "height": 600
+    },
+    "colors":
+    {
+        "red": "#e66247",
+        "black": "#181616",
+        "green": "#36944d",
+        "white": "#e3eaea",
+        "grey": "#777e79"
+    },
+    "card":
+    {
+        "width": 65,
+        "height": 80,
+        "stroke": 1,
+        "round": 5
+    }
+}
