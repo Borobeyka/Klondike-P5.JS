@@ -17,7 +17,7 @@
         "width": 85,
         "height": 110,
         "stroke": 1,
-        "round": 5,
+        "round": 10,
         "properties":
         {
             "textSize": 25,
