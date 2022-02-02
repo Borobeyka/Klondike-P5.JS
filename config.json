@@ -9,6 +9,7 @@
         "red": "#e66247",
         "black": "#181616",
         "green": "#36944d",
+        "darkgreen": "#1C542A",
         "white": "#e3eaea",
         "grey": "#777e79"
     },
@@ -21,16 +22,22 @@
         "properties":
         {
             "textSize": 25,
-            "offset":
-            {
-                "x": 5,
-                "y": 5
-            },
             "icon":
             {
                 "width": 20,
-                "height": 20
+                "height": 20,
+                "offset": 5
+            },
+            "iconLarge":
+            {
+                "width": 55,
+                "height": 55,
+                "offset": 45
             }
         }
+    },
+    "stack":
+    {
+        "offset": 30
     }
 }

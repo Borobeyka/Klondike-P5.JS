@@ -25,10 +25,15 @@ class Card {
             textStyle(BOLD);
             textAlign(LEFT, TOP);
             textSize(config.card.properties.textSize);
-            text(this.nominal, this.x + config.card.properties.offset.x, this.y + config.card.properties.offset.y);
+            text(this.nominal, this.x + config.card.properties.icon.offset, this.y + config.card.properties.icon.offset);
 
             tint(this.iconColor);
-            image(this.icon, this.x + config.card.properties.offset.x, this.y + config.card.properties.offset.y + config.card.properties.textSize, config.card.properties.icon.width, config.card.properties.icon.height);
+            image(this.icon, this.x + config.card.width - config.card.properties.icon.offset - config.card.properties.icon.width,
+                this.y + config.card.properties.icon.offset,
+                config.card.properties.icon.width, config.card.properties.icon.height);
+            image(this.icon, this.x + config.card.width / 2 - config.card.properties.iconLarge.width / 2,
+                this.y + config.card.properties.iconLarge.offset,
+                config.card.properties.iconLarge.width, config.card.properties.iconLarge.height);
         }
     }
 
