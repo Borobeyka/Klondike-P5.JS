@@ -34,7 +34,7 @@ class Stack {
     isInArea() {
         if(mouseX > this.x && mouseX < this.x + config.card.width + config.card.stroke &&
             mouseY > this.y && mouseY < this.y + config.card.height + config.card.stroke +
-            (this.count() == 1 || this.count() == 0) ? 0 : (this.count() - 1) * config.stack.offset)
+            (this.count() == 1 || this.count() == 0 ? 0 : (this.count() - 1) * config.stack.offset))
             return true;
         return false;
     }
