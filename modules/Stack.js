@@ -12,7 +12,7 @@ class Stack {
     show() {
         if(this.isEmpty()) {
             strokeWeight(config.card.stroke);
-            stroke(config.color.black);
+            stroke(config.color.lightgreen);
             fill(config.color.darkgreen);
             rect(this.x, this.y, config.card.width, config.card.height, config.card.round);
         }

@@ -18,7 +18,6 @@ function setup() {
     frameRate(60);
     smooth();
 
-
     for(var i = 0, x = 10; i < 7; i++, x += config.card.width + config.card.stroke + config.stack.offset) {
         stacks.push(new Stack(x, config.stack.paddingY));
         stacks[i].show();
@@ -35,8 +34,7 @@ function setup() {
 }
 
 function showFPS() {
-    if(config.app.debug)
-    {
+    if(config.app.debug) {
         textSize(20);
         text("FPS: " + int(frameRate()), config.app.width - 76, 5);
     }
