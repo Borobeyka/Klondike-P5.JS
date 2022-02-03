@@ -7,10 +7,11 @@ class Card {
         this.x = x;
         this.y = y;
         this.suit = suit;
-        this.nominal = nominal == 0 ? "A" : nominal;
+        this.nominal = nominal;
         this.isVisible = isVisible;
         this.icon = cardIcons.get(this.suit);
-        this.iconColor = suit == "heart" || suit == "spade" ? config.color.red : config.color.black;
+        this.suitIcon = cardIcons.get("suit");
+        this.iconColor = (suit == "heart" || suit == "diamond") ? config.color.red : config.color.black;
     }
 
     show() {
@@ -25,15 +26,29 @@ class Card {
             textStyle(BOLD);
             textAlign(LEFT, TOP);
             textSize(config.card.properties.textSize);
-            text(this.nominal, this.x + config.card.properties.icon.offset, this.y + config.card.properties.icon.offset);
+            text(config.nominal[this.nominal], this.x + config.card.properties.icon.offset, this.y + config.card.properties.icon.offset);
 
-            tint(this.iconColor);
+            //tint(this.iconColor);
             image(this.icon, this.x + config.card.width - config.card.properties.icon.offset - config.card.properties.icon.width,
                 this.y + config.card.properties.icon.offset,
                 config.card.properties.icon.width, config.card.properties.icon.height);
             image(this.icon, this.x + config.card.width / 2 - config.card.properties.iconLarge.width / 2,
                 this.y + config.card.properties.iconLarge.offset,
                 config.card.properties.iconLarge.width, config.card.properties.iconLarge.height);
+        }
+        else {
+            strokeWeight(config.card.stroke);
+            stroke(config.color.black);
+            fill(config.color.grey);
+            rect(this.x, this.y, config.card.width, config.card.height, config.card.round);
+
+            // suit image
+            // noTint();
+            // noFill();
+            // image(cardIcons.get("suit"), this.x, this.y, config.card.width, config.card.height);
+            // strokeWeight(config.card.stroke);
+            // stroke(config.color.black);
+            // rect(this.x, this.y, config.card.width, config.card.height, config.card.round);
         }
     }
 
@@ -65,7 +80,7 @@ class Card {
         return this;
     }
 
-    changeVisible() {
-        this.isVisible = !this.isVisible;
+    setVisible(status) {
+        this.isVisible = status;
     }
 }

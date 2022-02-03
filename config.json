@@ -2,16 +2,18 @@
     "app":
     {
         "width": 1200,
-        "height": 750
+        "height": 750,
+        "debug": true
     },
+    "nominal": [ "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" ],
     "color":
     {
         "red": "#e66247",
         "black": "#181616",
         "green": "#36944d",
-        "darkgreen": "#1C542A",
+        "darkgreen": "#1c542a",
         "white": "#e3eaea",
-        "grey": "#777e79"
+        "grey": "#afbab2"
     },
     "card":
     {
@@ -38,6 +40,7 @@
     },
     "stack":
     {
-        "offset": 30
+        "offset": 30,
+        "paddingY": 250
     }
 }

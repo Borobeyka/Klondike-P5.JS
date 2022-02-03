@@ -35,10 +35,17 @@ class Stack {
     }
 
     addCard(card) {
+        if(this.isEmpty && card.nominal != 12) return;
+
+        cards.splice(cards.map(_card => {
+            return _card.id;
+        }).indexOf(card.id), 1);
+        
         card.x = this.x;
         card.y = this.y + this.cards.length * config.stack.offset;
         this.cards.push(card);
     }
+            
 
     // addHeap(heap) {
     // }
