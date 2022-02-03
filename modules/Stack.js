@@ -23,27 +23,45 @@ class Stack {
         }
     }
 
+    count() {
+        return this.cards.length;
+    }
+
     isEmpty() {
-        return this.cards.length > 0 ? false : true;
+        return this.count() > 0 ? false : true;
     }
 
     isInArea() {
         if(mouseX > this.x && mouseX < this.x + config.card.width + config.card.stroke &&
-            mouseY > this.y && mouseY < this.y + config.card.height + config.card.stroke)
+            mouseY > this.y && mouseY < this.y + config.card.height + config.card.stroke +
+            (this.count() == 1 ? 0 : this.count() == 0 ? 0 : (this.count() - 1) * config.stack.offset))
             return true;
         return false;
     }
 
+    getCardOnFocus() {
+        for(var i = this.count() - 1; i >= 0; i--)
+            if(this.cards[i].isInArea())
+                return this.cards[i];
+    }
+
+    getLastCard() {
+        return this.cards.at(-1);
+    }
+
     addCard(card) {
-        if(this.isEmpty && card.nominal != 12) return;
+        if(this.isEmpty() && card.nominal != 12) return;
+        if(this.count() >= 1 && (this.getLastCard().iconColor == card.iconColor || this.getLastCard().nominal - card.nominal != 1)) return;
 
         cards.splice(cards.map(_card => {
             return _card.id;
         }).indexOf(card.id), 1);
-        
+
         card.x = this.x;
-        card.y = this.y + this.cards.length * config.stack.offset;
+        card.y = this.y + this.count() * config.stack.offset;
         this.cards.push(card);
+
+        draggedCard = null;
     }
             
 

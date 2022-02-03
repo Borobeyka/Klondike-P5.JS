@@ -25,9 +25,9 @@ function setup() {
     }
 
 
-    cards.push(new Card(10, 400, "heart", 0));
-    cards.push(new Card(130, 400, "diamond", 9)); 
-    cards.push(new Card(250, 400, "spade", 8)); 
+    cards.push(new Card(10, 400, "clover", 10));
+    cards.push(new Card(130, 400, "diamond", 11)); 
+    cards.push(new Card(250, 400, "spade", 11)); 
     cards.push(new Card(370, 400, "clover", 12)); 
 
     
@@ -38,7 +38,7 @@ function showFPS() {
     if(config.app.debug)
     {
         textSize(20);
-        text(int(frameRate()), config.app.width - 25, 5);
+        text("FPS: " + int(frameRate()), config.app.width - 76, 5);
     }
 }
 
@@ -69,6 +69,12 @@ function mousePressed() {
                 draggedCard.mouseOffsetY = abs(mouseY - draggedCard.y);
             }
         });
+
+        stacks.forEach(stack => {
+            if(stack.isInArea()) {
+                print(stack.getCardOnFocus());
+            }
+        });
     }
 }
 
@@ -77,11 +83,14 @@ function mouseReleased() {
     {
         stacks.forEach(stack => {
             if(stack.isInArea()) {                  
-                stack.addCard(draggedCard = null);
+                stack.addCard(draggedCard);
             }
         });
-        //draggedCard.returnPrevPosition();
-        draggedCard = null;
+        if(draggedCard != null)
+        {
+            draggedCard.returnPrevPosition();
+            draggedCard = null;
+        }
     }
         
 }

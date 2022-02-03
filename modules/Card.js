@@ -28,7 +28,6 @@ class Card {
             textSize(config.card.properties.textSize);
             text(config.nominal[this.nominal], this.x + config.card.properties.icon.offset, this.y + config.card.properties.icon.offset);
 
-            //tint(this.iconColor);
             image(this.icon, this.x + config.card.width - config.card.properties.icon.offset - config.card.properties.icon.width,
                 this.y + config.card.properties.icon.offset,
                 config.card.properties.icon.width, config.card.properties.icon.height);
@@ -69,8 +68,7 @@ class Card {
 
     isInArea() {
         if(mouseX > this.x && mouseX < this.x + config.card.width + config.card.stroke &&
-            mouseY > this.y && mouseY < this.y + config.card.height + config.card.stroke &&
-            mouseIsPressed == true)
+            mouseY > this.y && mouseY < this.y + config.card.height + config.card.stroke )
             return true;
         return false;
     }
