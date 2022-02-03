@@ -4,6 +4,9 @@ var cardIcons = new Map();
 var draggedCard = null;
 var stacks = [];
 
+var _suits = [ "clover", "diamond", "heart", "spade" ];
+var _cards = [];
+
 function preload() {
     config = loadJSON("config.json");
     cardIcons.set("clover", loadImage("assets/clover.png"));
@@ -22,6 +25,17 @@ function setup() {
         stacks.push(new Stack(x, config.stack.paddingY));
         stacks[i].show();
     }
+
+    for(var i = 0; i < 4; i++) {
+        for(var j = 0; j < 13; j++) {
+            _cards.push(new Card(0, 0, _suits[i], j));
+        }
+    }
+
+    _cards.forEach(_card => {
+        print(_card);
+    });
+
 
 
     cards.push(new Card(10, 400, "clover", 10));

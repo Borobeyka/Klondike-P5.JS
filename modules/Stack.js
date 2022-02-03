@@ -49,6 +49,15 @@ class Stack {
         return this.cards.at(-1);
     }
 
+    pushCard(card) {
+        _cards.splice(_cards.map(_card => {
+            return _card.id;
+        }).indexOf(card.id), 1);
+        card.x = this.x;
+        card.y = this.y + this.count() * config.stack.offset;
+        this.cards.push(card);
+    }
+
     addCard(card) {
         if(this.isEmpty() && card.nominal != 12) return;
         if(this.count() >= 1 && (this.getLastCard().iconColor == card.iconColor || this.getLastCard().nominal - card.nominal != 1)) return;

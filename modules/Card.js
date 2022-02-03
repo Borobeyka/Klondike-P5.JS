@@ -11,7 +11,7 @@ class Card {
         this.isVisible = isVisible;
         this.icon = cardIcons.get(this.suit);
         this.suitIcon = cardIcons.get("suit");
-        this.iconColor = (suit == "heart" || suit == "diamond") ? config.color.red : config.color.black;
+        this.iconColor = (this.suit == "heart" || this.suit == "diamond") ? config.color.red : config.color.black;
     }
 
     show() {
@@ -68,7 +68,7 @@ class Card {
 
     isInArea() {
         if(mouseX > this.x && mouseX < this.x + config.card.width + config.card.stroke &&
-            mouseY > this.y && mouseY < this.y + config.card.height + config.card.stroke )
+            mouseY > this.y && mouseY < this.y + config.card.height + config.card.stroke)
             return true;
         return false;
     }
