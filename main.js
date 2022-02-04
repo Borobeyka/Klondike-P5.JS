@@ -18,6 +18,11 @@ function preload() {
 
 function setup() {
     createCanvas(config.app.width, config.app.height, P2D);
+
+    var divs = document.getElementsByClassName("info");
+    for(var i = 0; i < divs.length; i++)
+       divs[i].style.width = config.app.width + "px";
+    
     frameRate(60);
     smooth();
 
