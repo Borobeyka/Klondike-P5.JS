@@ -26,22 +26,47 @@ function setup() {
         stacks[i].show();
     }
 
+    
+
     for(var i = 0; i < 4; i++) {
         for(var j = 0; j < 13; j++) {
+            print("Suit: " + _suits[i] + " nominal: " + j);
             _cards.push(new Card(0, 0, _suits[i], j));
         }
     }
 
-    _cards.forEach(_card => {
-        print(_card);
-    });
+    for(var i = 0; i < 7; i++) {
+        for(var j = 0; j < i + 1; j++) {
+            if((i + 1) - j == 1)
+                stacks[i].pushCard(_cards[getRandomInt(_cards.length)]);
+            else
+            {  
+                var card = _cards[getRandomInt(_cards.length)];
+                card.setVisible(false);
+                stacks[i].pushCard(card);
+            }
+        }
+    }
+
+    // for(int i = 0, x = distBetweenStacks; i < 7; i++, x += cardSize[0] + distBetweenStacks * 2) {
+    //     stacks.add(new Stack(x, cardSize[1] + distBetweenStacks));
+    //     Stack stack = new Stack();
+    //     for(int j = 0; j < i + 1; j++) {
+    //         if((i + 1) - j == 1) stack.addCard(new Card(200, 10, 0, 10));
+    //         else stack.addCard(new Card(200, 10, 0, 10, false));
+    //     }
+    //     stacks.get(i).addCard(stack);
+    // }
+
+
+    print(_cards);
 
 
 
-    cards.push(new Card(10, 400, "clover", 10));
-    cards.push(new Card(130, 400, "diamond", 11)); 
-    cards.push(new Card(250, 400, "spade", 11)); 
-    cards.push(new Card(370, 400, "clover", 12)); 
+    // cards.push(new Card(10, 400, "clover", 10));
+    // cards.push(new Card(130, 400, "diamond", 11)); 
+    // cards.push(new Card(250, 400, "spade", 11)); 
+    // cards.push(new Card(370, 400, "clover", 12)); 
 
     
     
@@ -49,6 +74,7 @@ function setup() {
 
 function showFPS() {
     if(config.app.debug) {
+        fill(0);
         textSize(20);
         text("FPS: " + int(frameRate()), config.app.width - 76, 5);
     }
@@ -106,3 +132,7 @@ function mouseReleased() {
     }
         
 }
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
