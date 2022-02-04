@@ -62,8 +62,8 @@ class Card {
     }
 
     updateCoords() {
-        this.x += (mouseX - this.x - this.mouseOffsetX) * 0.35;
-        this.y += (mouseY - this.y - this.mouseOffsetY) * 0.35;
+        this.x += (mouseX - this.x - this.mouseOffsetX) * config.animationMultiplier;
+        this.y += (mouseY - this.y - this.mouseOffsetY) * config.animationMultiplier;
     }
 
     isInArea() {

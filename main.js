@@ -2,6 +2,7 @@ var config;
 var cards = [];
 var cardIcons = new Map();
 var draggedCard = null;
+var draggedHeap = null;
 var stacks = [];
 
 var _suits = [ "clover", "diamond", "heart", "spade" ];
@@ -17,11 +18,10 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(config.app.width, config.app.height, P2D);
-
     var divs = document.getElementsByClassName("info");
-    for(var i = 0; i < divs.length; i++)
-       divs[i].style.width = config.app.width + "px";
+    for(var i = 0; i < divs.length; i++) divs[i].style.width = config.app.width + "px";
+
+    createCanvas(config.app.width, config.app.height, P2D);
     
     frameRate(60);
     smooth();
@@ -33,48 +33,29 @@ function setup() {
 
     
 
-    for(var i = 0; i < 4; i++) {
-        for(var j = 0; j < 13; j++) {
-            print("Suit: " + _suits[i] + " nominal: " + j);
+    for(var i = 0; i < 4; i++)
+        for(var j = 0; j < 13; j++)
             _cards.push(new Card(0, 0, _suits[i], j));
-        }
-    }
 
-    for(var i = 0; i < 7; i++) {
+    for(var i = 0; i < 7; i++)
         for(var j = 0; j < i + 1; j++) {
             if((i + 1) - j == 1)
                 stacks[i].pushCard(_cards[getRandomInt(_cards.length)]);
-            else
-            {  
+            else {  
                 var card = _cards[getRandomInt(_cards.length)];
                 card.setVisible(false);
                 stacks[i].pushCard(card);
             }
         }
-    }
-
-    // for(int i = 0, x = distBetweenStacks; i < 7; i++, x += cardSize[0] + distBetweenStacks * 2) {
-    //     stacks.add(new Stack(x, cardSize[1] + distBetweenStacks));
-    //     Stack stack = new Stack();
-    //     for(int j = 0; j < i + 1; j++) {
-    //         if((i + 1) - j == 1) stack.addCard(new Card(200, 10, 0, 10));
-    //         else stack.addCard(new Card(200, 10, 0, 10, false));
-    //     }
-    //     stacks.get(i).addCard(stack);
-    // }
-
 
     print(_cards);
 
 
 
     // cards.push(new Card(10, 400, "clover", 10));
-    // cards.push(new Card(130, 400, "diamond", 11)); 
-    // cards.push(new Card(250, 400, "spade", 11)); 
-    // cards.push(new Card(370, 400, "clover", 12)); 
-
-    
-    
+    // cards.push(new Card(130, 400, "diamond", 11));
+    // cards.push(new Card(250, 400, "spade", 11));
+    // cards.push(new Card(370, 400, "clover", 12));
 }
 
 function showFPS() {
@@ -99,6 +80,14 @@ function draw() {
 
     if(draggedCard != null)
         draggedCard.updateCoords();
+    if(draggedHeap != null)
+    {
+        draggedHeap.updateCoords();
+        draggedHeap.cards.forEach(card => {
+            card.show();
+        })
+    }
+        
 }
 
 function mousePressed() {
@@ -115,7 +104,14 @@ function mousePressed() {
 
         stacks.forEach(stack => {
             if(stack.isInArea()) {
-                print(stack.getCardOnFocus());
+                draggedHeap = stack.getHeapOnFocus();
+                if(typeof draggedHeap != "undefined") {
+                    print(draggedHeap);
+                    draggedHeap.saveOldCoords();
+                    draggedHeap.mouseOffsetX = abs(mouseX - draggedHeap.x);
+                    draggedHeap.mouseOffsetY = abs(mouseY - draggedHeap.y);
+                }
+                
             }
         });
     }
@@ -134,10 +130,15 @@ function mouseReleased() {
             draggedCard.returnPrevPosition();
             draggedCard = null;
         }
+        if(draggedHeap != null)
+        {
+            draggedHeap.returnPrevPosition();
+            draggedHeap = null;
+        }
     }
         
 }
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
-  }
+}

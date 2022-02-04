@@ -39,10 +39,18 @@ class Stack {
         return false;
     }
 
-    getCardOnFocus() {
-        for(var i = this.count() - 1; i >= 0; i--)
-            if(this.cards[i].isInArea())
-                return this.cards[i];
+    getHeapOnFocus() {
+        for(var i = this.count() - 1; i >= 0; i--) {
+            if(this.cards[i].isInArea() && this.cards[i].isVisible)
+            {
+                var heap = new Heap(this.cards[i].x, this.cards[i].y);
+                var idx = this.cards.indexOf(this.cards[i]);
+                for(var i = idx; i < this.count(); i++)
+                    heap.addCard(this.cards[i]);
+                return heap;
+            }
+        }
+        return;
     }
 
     getLastCard() {
