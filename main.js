@@ -20,9 +20,7 @@ function preload() {
 function setup() {
     var divs = document.getElementsByClassName("info");
     for(var i = 0; i < divs.length; i++) divs[i].style.width = config.app.width + "px";
-
     createCanvas(config.app.width, config.app.height, P2D);
-    
     frameRate(60);
     smooth();
 
@@ -64,30 +62,16 @@ function draw() {
         stack.show();
     });
 
-    // if(draggedCard != null)
-    //     draggedCard.updateCoords();
     if(draggedHeap != null)
     {
         draggedHeap.updateCoords();
         draggedHeap.show();
-        //print(draggedHeap);
-        //print("Updated");
     }
         
 }
 
 function mousePressed() {
     if(mouseButton === LEFT) {
-        // cards.forEach(card => {
-        //     if(card.isInArea() && card.isVisible)
-        //     {
-        //         draggedCard = card.getObject();
-        //         draggedCard.saveOldCoords();
-        //         draggedCard.mouseOffsetX = abs(mouseX - draggedCard.x);
-        //         draggedCard.mouseOffsetY = abs(mouseY - draggedCard.y);
-        //     }
-        // });
-
         stacks.forEach(stack => {
             if(stack.isInArea() && !stack.isEmpty()) {
                 draggedHeap = stack.getHeapOnFocus();
@@ -106,19 +90,13 @@ function mouseReleased() {
         //         stack.addCard(draggedCard);
         //     }
         // });
-        // if(draggedCard != null)
-        // {
-        //     draggedCard.returnPrevPosition();
-        //     draggedCard = null;
-        // }
+
         if(draggedHeap != null)
         {
             draggedHeap.returnPrevPosition();
             draggedHeap = null;
-            print("draggedHeap=null");
         }
     }
-        
 }
 
 function getRandomInt(max) {
