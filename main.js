@@ -1,8 +1,8 @@
 var config;
 var cards = [];
 var cardIcons = new Map();
-var draggedCard = null;
 var draggedHeap = null;
+var draggedStack = null;
 var stacks = [];
 
 var _suits = [ "clover", "diamond", "heart", "spade" ];
@@ -42,7 +42,8 @@ function setup() {
             }
         }
     }
-    stacks[6].pushCard(_cards[getRandomInt(_cards.length)]);
+    //stacks[6].pushCard(_cards[getRandomInt(_cards.length)]);
+    print(stacks[6].cards);
     //print(_cards);
 }
 
@@ -75,6 +76,7 @@ function mousePressed() {
         stacks.forEach(stack => {
             if(stack.isInArea() && !stack.isEmpty()) {
                 draggedHeap = stack.getHeapOnFocus();
+                draggedStack = stack;
                 if(typeof draggedHeap != "undefined")
                     draggedHeap.saveOldCoords();
             }
@@ -85,16 +87,23 @@ function mousePressed() {
 function mouseReleased() {
     if(mouseButton === LEFT && draggedHeap != null)
     {
-        // stacks.forEach(stack => {
-        //     if(stack.isInArea()) {                  
-        //         stack.addCard(draggedCard);
-        //     }
-        // });
+        stacks.forEach(stack => {
+            if(stack.isInArea()) {
+                if(stack.isCanStack(draggedHeap)) {
+                    stack.pushHeap(draggedHeap);
+                    if(draggedStack.count() > 0)
+                        draggedStack.getLastCard().setVisible(true);
+                    draggedHeap = null;
+                }  
+            }
+        });
 
         if(draggedHeap != null)
         {
+            draggedStack.pushHeap(draggedHeap);
             draggedHeap.returnPrevPosition();
             draggedHeap = null;
+            draggedStack = null;
         }
     }
 }

@@ -6,8 +6,8 @@ class Heap {
     }
 
     show() {
-        this.cards.forEach(_card => {
-            _card.show();
+        this.cards.forEach(card => {
+            card.show();
         });
     }
 
@@ -27,6 +27,7 @@ class Heap {
             card.x = this.x;
             card.y = this.y + id * config.stack.offset;
         });
+        //print(this);
     }
 
     saveOldCoords() {

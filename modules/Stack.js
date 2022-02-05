@@ -18,6 +18,9 @@ class Stack {
         }
         else {
             this.cards.forEach(card => {
+                //print(this.getLastCard());
+                // if(!this.getLastCard().isVisible)
+                //     card.setVisible(true);
                 card.show();
             });
         }
@@ -48,21 +51,41 @@ class Stack {
                 heap.mouseOffsetY = abs(mouseY - heap.y);
                 var idx = this.cards.indexOf(this.cards[i]);
 
+                this.cards.forEach((card, index) => {
+                    if(index >= idx)
+                        heap.addCard(card);
+                });
 
-                for(var i = idx; i < this.count(); i++)
-                {
-                    heap.addCard(this.cards[i]);
-                    this.cards.splice(i, 1);
-                }
-                    
+                this.cards.forEach((_, index) => {
+                    if(index >= idx)
+                        this.cards.splice(index, 1);
+                });
                 return heap;
             }
         }
         return;
     }
 
+    isCanStack(heap) {
+        print("this");
+        print(this);
+        print("heap");
+        print(heap);
+        if(this.isEmpty() && heap.cards[0].nominal != 12) return false;
+        if(this.count() >= 1 && (this.getLastCard().iconColor == heap.cards[0].iconColor || this.getLastCard().nominal - heap.cards[0].nominal != 1)) return false;
+        return true;
+    }
+
     getLastCard() {
         return this.cards.at(-1);
+    }
+
+    pushHeap(heap) {
+        heap.cards.forEach(card => {
+            card.x = this.x;
+            card.y = this.y + this.count() * config.stack.offset;
+            this.cards.push(card);
+        });
     }
 
     pushCard(card) {
@@ -78,9 +101,9 @@ class Stack {
         if(this.isEmpty() && card.nominal != 12) return;
         if(this.count() >= 1 && (this.getLastCard().iconColor == card.iconColor || this.getLastCard().nominal - card.nominal != 1)) return;
 
-        cards.splice(cards.map(_card => {
-            return _card.id;
-        }).indexOf(card.id), 1);
+        // cards.splice(cards.map(_card => {
+        //     return _card.id;
+        // }).indexOf(card.id), 1);
 
         card.x = this.x;
         card.y = this.y + this.count() * config.stack.offset;
