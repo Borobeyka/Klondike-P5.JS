@@ -30,14 +30,10 @@ function setup() {
         stacks.push(new Stack(x, config.stack.paddingY));
         stacks[i].show();
     }
-
-    
-
     for(var i = 0; i < 4; i++)
         for(var j = 0; j < 13; j++)
             _cards.push(new Card(0, 0, _suits[i], j));
-
-    for(var i = 0; i < 7; i++)
+    for(var i = 0; i < 7; i++) {
         for(var j = 0; j < i + 1; j++) {
             if((i + 1) - j == 1)
                 stacks[i].pushCard(_cards[getRandomInt(_cards.length)]);
@@ -47,15 +43,9 @@ function setup() {
                 stacks[i].pushCard(card);
             }
         }
-
-    print(_cards);
-
-
-
-    // cards.push(new Card(10, 400, "clover", 10));
-    // cards.push(new Card(130, 400, "diamond", 11));
-    // cards.push(new Card(250, 400, "spade", 11));
-    // cards.push(new Card(370, 400, "clover", 12));
+    }
+    stacks[6].pushCard(_cards[getRandomInt(_cards.length)]);
+    //print(_cards);
 }
 
 function showFPS() {
@@ -74,66 +64,58 @@ function draw() {
         stack.show();
     });
 
-    cards.forEach(card => {
-        card.show();
-    });
-
-    if(draggedCard != null)
-        draggedCard.updateCoords();
+    // if(draggedCard != null)
+    //     draggedCard.updateCoords();
     if(draggedHeap != null)
     {
         draggedHeap.updateCoords();
-        draggedHeap.cards.forEach(card => {
-            card.show();
-        })
+        draggedHeap.show();
+        //print(draggedHeap);
+        //print("Updated");
     }
         
 }
 
 function mousePressed() {
     if(mouseButton === LEFT) {
-        cards.forEach(card => {
-            if(card.isInArea() && card.isVisible)
-            {
-                draggedCard = card.getObject();
-                draggedCard.saveOldCoords();
-                draggedCard.mouseOffsetX = abs(mouseX - draggedCard.x);
-                draggedCard.mouseOffsetY = abs(mouseY - draggedCard.y);
-            }
-        });
+        // cards.forEach(card => {
+        //     if(card.isInArea() && card.isVisible)
+        //     {
+        //         draggedCard = card.getObject();
+        //         draggedCard.saveOldCoords();
+        //         draggedCard.mouseOffsetX = abs(mouseX - draggedCard.x);
+        //         draggedCard.mouseOffsetY = abs(mouseY - draggedCard.y);
+        //     }
+        // });
 
         stacks.forEach(stack => {
-            if(stack.isInArea()) {
+            if(stack.isInArea() && !stack.isEmpty()) {
                 draggedHeap = stack.getHeapOnFocus();
-                if(typeof draggedHeap != "undefined") {
-                    print(draggedHeap);
+                if(typeof draggedHeap != "undefined")
                     draggedHeap.saveOldCoords();
-                    draggedHeap.mouseOffsetX = abs(mouseX - draggedHeap.x);
-                    draggedHeap.mouseOffsetY = abs(mouseY - draggedHeap.y);
-                }
-                
             }
         });
     }
 }
 
 function mouseReleased() {
-    if(mouseButton === LEFT && draggedCard != null)
+    if(mouseButton === LEFT && draggedHeap != null)
     {
-        stacks.forEach(stack => {
-            if(stack.isInArea()) {                  
-                stack.addCard(draggedCard);
-            }
-        });
-        if(draggedCard != null)
-        {
-            draggedCard.returnPrevPosition();
-            draggedCard = null;
-        }
+        // stacks.forEach(stack => {
+        //     if(stack.isInArea()) {                  
+        //         stack.addCard(draggedCard);
+        //     }
+        // });
+        // if(draggedCard != null)
+        // {
+        //     draggedCard.returnPrevPosition();
+        //     draggedCard = null;
+        // }
         if(draggedHeap != null)
         {
             draggedHeap.returnPrevPosition();
             draggedHeap = null;
+            print("draggedHeap=null");
         }
     }
         

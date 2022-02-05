@@ -5,6 +5,16 @@ class Heap {
         this.cards = [];
     }
 
+    show() {
+        this.cards.forEach(_card => {
+            _card.show();
+        });
+    }
+
+    count() {
+        return this.cards.length;
+    }
+
     addCard(card) {
         this.cards.push(card);
     }
@@ -12,6 +22,11 @@ class Heap {
     returnPrevPosition() {
         this.x = this.oldX;
         this.y = this.oldY;
+
+        this.cards.forEach((card, id) => {
+            card.x = this.x;
+            card.y = this.y + id * config.stack.offset;
+        });
     }
 
     saveOldCoords() {
@@ -22,6 +37,12 @@ class Heap {
     updateCoords() {
         this.x += (mouseX - this.x - this.mouseOffsetX) * config.animationMultiplier;
         this.y += (mouseY - this.y - this.mouseOffsetY) * config.animationMultiplier;
+
+        this.cards.forEach((card, id) => {
+            card.x = this.x;
+            card.y = this.y + id * config.stack.offset;
+        });
+
         //print(this.x, this.y);
     }
 }
