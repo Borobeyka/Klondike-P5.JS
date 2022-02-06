@@ -4,6 +4,7 @@ var cardIcons = new Map();
 var draggedHeap = null;
 var draggedStack = null;
 var stacks = [];
+var deck;
 
 var _suits = [ "clover", "diamond", "heart", "spade" ];
 var _cards = [];
@@ -25,14 +26,11 @@ function setup() {
     frameRate(60);
     smooth();
 
-    for(var i = 0, x = 10; i < 7; i++, x += config.card.width + config.card.stroke + config.stack.offset) {
-        stacks.push(new Stack(x, config.stack.paddingY));
-        stacks[i].show();
-    }
     for(var i = 0; i < 4; i++)
         for(var j = 0; j < 13; j++)
             _cards.push(new Card(0, 0, _suits[i], j));
-    for(var i = 0; i < 7; i++) {
+    for(var i = 0, x = 10; i < 7; i++, x += config.card.width + config.card.stroke + config.stack.offset) {
+        stacks.push(new Stack(x, config.stack.paddingY));
         for(var j = 0; j < i + 1; j++) {
             if((i + 1) - j == 1)
                 stacks[i].pushCard(_cards[getRandomInt(_cards.length)]);
@@ -43,12 +41,21 @@ function setup() {
             }
         }
     }
-    //print(_cards);
+
+    deck = new Deck((config.card.width + config.card.stroke + config.stack.offset) * 6 + 10, 10);
+    for(var i = _cards.length; i > 0; i--) {
+        var card = _cards[getRandomInt(i)];
+        deck.addCard(card);
+        var idx = _cards.indexOf(card);
+        _cards = _cards.slice(0, idx).concat(_cards.slice(idx + 1));
+    }
+    //print(deck);
 }
 
 function showFPS() {
     if(config.app.debug) {
         fill(0);
+        noStroke();
         textSize(20);
         text("FPS: " + int(frameRate()), config.app.width - 76, 5);
     }
@@ -61,6 +68,8 @@ function draw() {
     stacks.forEach(stack => {
         stack.show();
     });
+
+    deck.show();
 
     if(draggedHeap != null)
     {
@@ -78,6 +87,19 @@ function mousePressed() {
                 if(typeof draggedHeap != "undefined") {
                     draggedHeap.saveOldCoords();
                     draggedStack = stack;
+                }
+            }
+        });
+        if(deck.isInArea()) {
+            deck.pickCard();
+            print("Da");
+        }
+        deck.cards.forEach(card => {
+            if(card.isInArea() && card.isVisible) {
+                draggedHeap = deck.getHeapOnFocus();
+                if(typeof draggedHeap != "undefined") {
+                    draggedHeap.saveOldCoords();
+                    draggedStack = deck;
                 }
             }
         });

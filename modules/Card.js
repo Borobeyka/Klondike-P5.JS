@@ -1,14 +1,14 @@
 class Card {
     static TOTAL_CARDS = 0;
 
-    constructor(x, y, suit, nominal, isVisible = true) {
+    constructor(x, y, suit, nominal) {
         this.id = ++Card.TOTAL_CARDS;
 
         this.x = x;
         this.y = y;
         this.suit = suit;
         this.nominal = nominal;
-        this.isVisible = isVisible;
+        this.isVisible = true;
         this.icon = cardIcons.get(this.suit);
         this.suitIcon = cardIcons.get("suit");
         this.iconColor = (this.suit == "heart" || this.suit == "diamond") ? config.color.red : config.color.black;
