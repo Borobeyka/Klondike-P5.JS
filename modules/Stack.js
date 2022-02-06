@@ -52,8 +52,7 @@ class Stack {
                     if(index >= idx)
                         heap.addCard(card);
                 });
-                if(this.count() == 1) this.cards.splice(idx, 1);
-                else this.cards.splice(idx, this.count() - 1);
+                this.cards.splice(idx, this.count() == 1 ? 1 : this.count() - 1);
                 return heap;
             }
         }
