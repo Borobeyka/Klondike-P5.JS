@@ -52,11 +52,8 @@ class Stack {
                     if(index >= idx)
                         heap.addCard(card);
                 });
-
-                this.cards.forEach((_, index) => {
-                    if(index >= idx)
-                        this.cards.splice(index, 1);
-                });
+                if(this.count() == 1) this.cards.splice(idx, 1);
+                else this.cards.splice(idx, this.count() - 1);
                 return heap;
             }
         }
@@ -64,8 +61,11 @@ class Stack {
     }
 
     isCanStack(heap) {
-        if(this.isEmpty() && heap.cards[0].nominal != 12) return false;
-        if(this.count() >= 1 && (this.getLastCard().iconColor == heap.cards[0].iconColor || this.getLastCard().nominal - heap.cards[0].nominal != 1)) return false;
+        if(this.isEmpty() && heap.cards[0].nominal != 12)
+            return false;
+        if(this.count() >= 1 && (this.getLastCard().iconColor == heap.cards[0].iconColor ||
+            this.getLastCard().nominal - heap.cards[0].nominal != 1))
+                return false;
         return true;
     }
 

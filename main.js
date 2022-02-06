@@ -42,7 +42,7 @@ function setup() {
             }
         }
     }
-    //stacks[6].pushCard(_cards[getRandomInt(_cards.length)]);
+    //print(_cards);
 }
 
 function showFPS() {
@@ -74,17 +74,17 @@ function mousePressed() {
         stacks.forEach(stack => {
             if(stack.isInArea() && !stack.isEmpty()) {
                 draggedHeap = stack.getHeapOnFocus();
-                draggedStack = stack;
-                if(typeof draggedHeap != "undefined")
+                if(typeof draggedHeap != "undefined") {
                     draggedHeap.saveOldCoords();
+                    draggedStack = stack;
+                }
             }
         });
     }
 }
 
 function mouseReleased() {
-    if(mouseButton === LEFT && draggedHeap != null)
-    {
+    if(mouseButton === LEFT && draggedHeap != null) {
         stacks.forEach(stack => {
             if(stack.isInArea()) {
                 if(stack.isCanStack(draggedHeap)) {
@@ -92,7 +92,7 @@ function mouseReleased() {
                     if(draggedStack.count() > 0)
                         draggedStack.getLastCard().setVisible(true);
                     draggedHeap = null;
-                }  
+                }
             }
         });
 
