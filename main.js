@@ -18,6 +18,7 @@ function preload() {
 }
 
 function setup() {
+    document.getElementsByClassName("update")[0].innerText = "Last update: " + config.updated;
     var divs = document.getElementsByClassName("info");
     for(var i = 0; i < divs.length; i++) divs[i].style.width = config.app.width + "px";
     createCanvas(config.app.width, config.app.height, P2D);
