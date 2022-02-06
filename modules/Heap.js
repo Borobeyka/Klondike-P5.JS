@@ -27,7 +27,6 @@ class Heap {
             card.x = this.x;
             card.y = this.y + id * config.stack.offset;
         });
-        //print(this);
     }
 
     saveOldCoords() {
@@ -43,7 +42,5 @@ class Heap {
             card.x = this.x;
             card.y = this.y + id * config.stack.offset;
         });
-
-        //print(this.x, this.y);
     }
 }

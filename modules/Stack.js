@@ -18,9 +18,6 @@ class Stack {
         }
         else {
             this.cards.forEach(card => {
-                //print(this.getLastCard());
-                // if(!this.getLastCard().isVisible)
-                //     card.setVisible(true);
                 card.show();
             });
         }
@@ -67,10 +64,6 @@ class Stack {
     }
 
     isCanStack(heap) {
-        print("this");
-        print(this);
-        print("heap");
-        print(heap);
         if(this.isEmpty() && heap.cards[0].nominal != 12) return false;
         if(this.count() >= 1 && (this.getLastCard().iconColor == heap.cards[0].iconColor || this.getLastCard().nominal - heap.cards[0].nominal != 1)) return false;
         return true;

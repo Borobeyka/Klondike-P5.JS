@@ -43,8 +43,6 @@ function setup() {
         }
     }
     //stacks[6].pushCard(_cards[getRandomInt(_cards.length)]);
-    print(stacks[6].cards);
-    //print(_cards);
 }
 
 function showFPS() {
