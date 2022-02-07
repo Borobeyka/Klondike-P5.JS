@@ -3,7 +3,7 @@ class Deck {
         this.x = x;
         this.y = y;
         this.cards = [];
-        this.currentCard = null;
+        this.curCardIndex = null;
     }
 
     addCard(card) {
@@ -18,21 +18,38 @@ class Deck {
     }
 
     show() {
-        var lastCard;
-        if(this.currentCard != null) {
-            this.currentCard.show();
-            lastCard = this.cards[this.cards.indexOf(this.currentCard) - 1];
+        if(this.curCardIndex != null) {
+            this.cards[this.curCardIndex].show();
         }
-        else lastCard = this.getLastCard();
-        if(typeof lastCard == "undefined") {
+        else {
+            this.cards.forEach(card => {
+                card.x = this.x;
+                card.setVisible(false);
+            });
+        }
+
+        if(typeof this.cards[this.curCardIndex + 1] != "undefined") {
+            this.cards[this.curCardIndex + 1].show();
+        }
+        else {
             strokeWeight(config.card.stroke);
             stroke(config.color.lightgreen);
             fill(config.color.darkgreen);
             rect(this.x, this.y, config.card.width, config.card.height, config.card.round);
+            
         }
-        else lastCard.show();
+    }
 
-        
+    pickCard() {
+        if(this.curCardIndex == null) this.curCardIndex = 0;
+        else this.curCardIndex++;
+        if(this.curCardIndex == this.count()) this.curCardIndex = null;
+        else {
+            this.cards[this.curCardIndex].setVisible(true);
+            this.cards[this.curCardIndex].x -= config.card.width + config.card.stroke + config.stack.offset;
+            this.cards[this.curCardIndex].show();
+        }
+        print(this.curCardIndex);
     }
 
     isInArea() {
@@ -42,35 +59,27 @@ class Deck {
         return false;
     }
 
-    pickCard() {
-        this.currentCard = this.getLastCard();
-        this.currentCard.setVisible(true);
-        //print(this.currentCard);
-        this.currentCard.x -= config.card.width + config.card.stroke + config.stack.offset;
-        this.currentCard.show();
-    }
-
     count() {
         return this.cards.length;
     }
 
     getHeapOnFocus() {
-        for(var i = this.count() - 1; i >= 0; i--) {
-            if(this.cards[i].isInArea() && this.cards[i].isVisible)
-            {
-                var heap = new Heap(this.cards[i].x, this.cards[i].y);
+        var heap;
+        this.cards.forEach(card => {
+            if(card.isInArea() && card.isVisible) {
+                var card = this.cards[this.curCardIndex];
+                heap = new Heap(card.x, card.y);
                 heap.mouseOffsetX = abs(mouseX - heap.x);
                 heap.mouseOffsetY = abs(mouseY - heap.y);
-                var idx = this.cards.indexOf(this.cards[i]);
-
-                this.cards.forEach((card, index) => {
-                    if(index >= idx)
-                        heap.addCard(card);
-                });
-                this.cards.splice(idx, this.count() == 1 ? 1 : this.count());
-                return heap;
+                card.setVisible(true);
+                heap.addCard(card);
+                this.cards.splice(this.curCardIndex, 1);
             }
-        }
-        return;
+        });
+        return heap;
+    }
+
+    pushHeap(heap) {
+        this.cards.splice(this.curCardIndex, 0, heap.cards[0]);
     }
 }

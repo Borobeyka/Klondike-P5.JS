@@ -90,10 +90,7 @@ function mousePressed() {
                 }
             }
         });
-        if(deck.isInArea()) {
-            deck.pickCard();
-            print("Da");
-        }
+        
         deck.cards.forEach(card => {
             if(card.isInArea() && card.isVisible) {
                 draggedHeap = deck.getHeapOnFocus();
@@ -103,6 +100,9 @@ function mousePressed() {
                 }
             }
         });
+        if(deck.isInArea() && draggedHeap == null) {
+            deck.pickCard();
+        }
     }
 }
 
