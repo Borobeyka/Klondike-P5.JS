@@ -18,10 +18,10 @@ class Deck {
     }
 
     show() {
-        if(this.curCardIndex != null) {
+        if(this.curCardIndex != null && typeof this.cards[this.curCardIndex] != "undefined") {
             this.cards[this.curCardIndex].show();
         }
-        else {
+        else if(this.curCardIndex == null) {
             this.cards.forEach(card => {
                 card.x = this.x;
                 card.setVisible(false);
@@ -29,6 +29,7 @@ class Deck {
         }
 
         if(typeof this.cards[this.curCardIndex + 1] != "undefined") {
+            this.cards[this.curCardIndex + 1].setVisible(false);
             this.cards[this.curCardIndex + 1].show();
         }
         else {
@@ -36,20 +37,24 @@ class Deck {
             stroke(config.color.lightgreen);
             fill(config.color.darkgreen);
             rect(this.x, this.y, config.card.width, config.card.height, config.card.round);
-            
         }
     }
 
     pickCard() {
         if(this.curCardIndex == null) this.curCardIndex = 0;
-        else this.curCardIndex++;
-        if(this.curCardIndex == this.count()) this.curCardIndex = null;
+        else if(this.curCardIndex >= 0) this.curCardIndex++;
+
+        if(this.curCardIndex >= this.count()){
+            this.curCardIndex = null;
+            print(this.cards);
+        }
         else {
             this.cards[this.curCardIndex].setVisible(true);
             this.cards[this.curCardIndex].x -= config.card.width + config.card.stroke + config.stack.offset;
-            this.cards[this.curCardIndex].show();
         }
+
         print(this.curCardIndex);
+        
     }
 
     isInArea() {
@@ -64,22 +69,20 @@ class Deck {
     }
 
     getHeapOnFocus() {
-        var heap;
-        this.cards.forEach(card => {
-            if(card.isInArea() && card.isVisible) {
-                var card = this.cards[this.curCardIndex];
-                heap = new Heap(card.x, card.y);
-                heap.mouseOffsetX = abs(mouseX - heap.x);
-                heap.mouseOffsetY = abs(mouseY - heap.y);
-                card.setVisible(true);
-                heap.addCard(card);
-                this.cards.splice(this.curCardIndex, 1);
-            }
-        });
+        var card = this.cards[this.curCardIndex];
+        var heap = new Heap(card.x, card.y);
+        heap.mouseOffsetX = abs(mouseX - heap.x);
+        heap.mouseOffsetY = abs(mouseY - heap.y);
+        card.setVisible(true);
+        heap.addCard(card);
+        this.cards.splice(this.curCardIndex, 1);
+        if(this.curCardIndex == this.count()) this.curCardIndex++;
         return heap;
     }
 
     pushHeap(heap) {
+        if(this.curCardIndex + 1 > this.count()) this.curCardIndex--;
+        else this.curCardIndex++;
         this.cards.splice(this.curCardIndex, 0, heap.cards[0]);
     }
 }

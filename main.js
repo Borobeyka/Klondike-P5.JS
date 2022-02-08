@@ -41,7 +41,6 @@ function setup() {
             }
         }
     }
-
     deck = new Deck((config.card.width + config.card.stroke + config.stack.offset) * 6 + 10, 10);
     for(var i = _cards.length; i > 0; i--) {
         var card = _cards[getRandomInt(i)];
@@ -54,29 +53,24 @@ function setup() {
 
 function showFPS() {
     if(config.app.debug) {
-        fill(0);
+        fill(0, 255, 0);
         noStroke();
         textSize(20);
-        text("FPS: " + int(frameRate()), config.app.width - 76, 5);
+        text(int(frameRate()), config.app.width - 23, 5);
     }
 }
 
 function draw() {
     background(config.color.green);
-    showFPS();
-
     stacks.forEach(stack => {
         stack.show();
     });
-
     deck.show();
-
-    if(draggedHeap != null)
-    {
+    if(draggedHeap != null) {
         draggedHeap.updateCoords();
         draggedHeap.show();
     }
-        
+    showFPS();
 }
 
 function mousePressed() {
@@ -90,9 +84,10 @@ function mousePressed() {
                 }
             }
         });
-        
-        deck.cards.forEach(card => {
-            if(card.isInArea() && card.isVisible) {
+        if(deck.isInArea() && draggedHeap == null)
+            deck.pickCard();
+        deck.cards.forEach((card, index) => {
+            if(card.isInArea() && deck.curCardIndex == index) {
                 draggedHeap = deck.getHeapOnFocus();
                 if(typeof draggedHeap != "undefined") {
                     draggedHeap.saveOldCoords();
@@ -100,9 +95,6 @@ function mousePressed() {
                 }
             }
         });
-        if(deck.isInArea() && draggedHeap == null) {
-            deck.pickCard();
-        }
     }
 }
 
@@ -119,10 +111,9 @@ function mouseReleased() {
             }
         });
 
-        if(draggedHeap != null)
-        {
-            draggedStack.pushHeap(draggedHeap);
+        if(draggedHeap != null) {
             draggedHeap.returnPrevPosition();
+            draggedStack.pushHeap(draggedHeap);
             draggedHeap = null;
             draggedStack = null;
         }
