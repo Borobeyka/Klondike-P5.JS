@@ -27,7 +27,6 @@ class Deck {
                 card.setVisible(false);
             });
         }
-
         if(typeof this.cards[this.curCardIndex + 1] != "undefined") {
             this.cards[this.curCardIndex + 1].setVisible(false);
             this.cards[this.curCardIndex + 1].show();
@@ -43,7 +42,6 @@ class Deck {
     pickCard() {
         if(this.curCardIndex == null) this.curCardIndex = 0;
         else if(this.curCardIndex >= 0) this.curCardIndex++;
-
         if(this.curCardIndex >= this.count()){
             this.curCardIndex = null;
             print(this.cards);
@@ -51,10 +49,7 @@ class Deck {
         else {
             this.cards[this.curCardIndex].setVisible(true);
             this.cards[this.curCardIndex].x -= config.card.width + config.card.stroke + config.stack.offset;
-        }
-
-        print(this.curCardIndex);
-        
+        }       
     }
 
     isInArea() {
