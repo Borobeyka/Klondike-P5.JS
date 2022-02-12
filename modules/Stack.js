@@ -44,8 +44,6 @@ class Stack {
             if(this.cards[i].isInArea() && this.cards[i].isVisible)
             {
                 var heap = new Heap(this.cards[i].x, this.cards[i].y);
-                heap.mouseOffsetX = abs(mouseX - heap.x);
-                heap.mouseOffsetY = abs(mouseY - heap.y);
                 var idx = this.cards.indexOf(this.cards[i]);
 
                 this.cards.forEach((card, index) => {

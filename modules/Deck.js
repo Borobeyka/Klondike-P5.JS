@@ -64,8 +64,6 @@ class Deck {
     getHeapOnFocus() {
         var card = this.cards[this.curCardIndex];
         var heap = new Heap(card.x, card.y);
-        heap.mouseOffsetX = abs(mouseX - heap.x);
-        heap.mouseOffsetY = abs(mouseY - heap.y);
         card.setVisible(true);
         heap.addCard(card);
         this.cards.splice(this.curCardIndex, 1);

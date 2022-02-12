@@ -50,9 +50,6 @@ class Storage {
     getHeapOnFocus() {
         var card = this.getLastCard();
         var heap = new Heap(card.x, card.y);
-        heap.mouseOffsetX = abs(mouseX - heap.x);
-        heap.mouseOffsetY = abs(mouseY - heap.y);
-        //card.setVisible(true);
         heap.addCard(card);
         this.cards.splice(this.cards.indexOf(card), 1);
         return heap;

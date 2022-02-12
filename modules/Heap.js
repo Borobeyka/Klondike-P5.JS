@@ -3,6 +3,9 @@ class Heap {
         this.x = x;
         this.y = y;
         this.cards = [];
+         
+        this.mouseOffsetX = abs(mouseX - this.x);
+        this.mouseOffsetY = abs(mouseY - this.y);
     }
 
     show() {
