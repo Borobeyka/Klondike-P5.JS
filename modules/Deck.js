@@ -41,13 +41,13 @@ class Deck {
 
     pickCard() {
         if(this.curCardIndex == null) this.curCardIndex = 0;
-        else if(this.curCardIndex >= 0) this.curCardIndex++;
+        else if(this.curCardIndex >= 0 ) this.curCardIndex++;
 
         if(this.curCardIndex >= this.count()) this.curCardIndex = null;
         else {
             this.cards[this.curCardIndex].setVisible(true);
             this.cards[this.curCardIndex].x -= config.card.width + config.card.stroke + config.stack.offset;
-        }       
+        }
     }
 
     isInArea() {
@@ -73,7 +73,7 @@ class Deck {
 
     pushHeap(heap) {
         if(this.curCardIndex + 1 > this.count()) this.curCardIndex--;
-        else this.curCardIndex++;
+        //else this.curCardIndex++;
         this.cards.splice(this.curCardIndex, 0, heap.cards[0]);
     }
 }

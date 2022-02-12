@@ -51,6 +51,7 @@ function setup() {
         var idx = cards.indexOf(card);
         cards = cards.slice(0, idx).concat(cards.slice(idx + 1));
     }
+    print(deck);
 }
 
 function showFPS() {
