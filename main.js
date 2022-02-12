@@ -2,11 +2,10 @@ var config;
 var cardIcons = new Map();
 var draggedHeap = null;
 var draggedStack = null;
+var cards = [];
 var stacks = [];
 var storages = [];
 var deck;
-
-var cards = [];
 
 function preload() {
     config = loadJSON("config.json");
@@ -41,9 +40,11 @@ function setup() {
             }
         }
     }
+
     for(var i = 0, x = 10; i < 4; i++, x += config.card.width + config.card.stroke + config.stack.offset) {
         storages.push(new Storage(x, 10));
     }
+
     deck = new Deck((config.card.width + config.card.stroke + config.stack.offset) * 6 + 10, 10);
     for(var i = cards.length; i > 0; i--) {
         var card = cards[getRandomInt(i)];
@@ -51,7 +52,6 @@ function setup() {
         var idx = cards.indexOf(card);
         cards = cards.slice(0, idx).concat(cards.slice(idx + 1));
     }
-    print(deck);
 }
 
 function showFPS() {
@@ -65,18 +65,35 @@ function showFPS() {
 
 function draw() {
     background(config.color.green);
+
     stacks.forEach(stack => {
         stack.show();
     });
+
     storages.forEach(storage => {
         storage.show();
-    })
+    });
+
     deck.show();
+
     if(draggedHeap != null) {
         draggedHeap.updateCoords();
         draggedHeap.show();
     }
     showFPS();
+
+    var cardsTOTAL = storages.reduce(function (accumulator, currentValue) {
+        return accumulator + currentValue.count();
+    }, 0);
+    print(cardsTOTAL);
+    if(cardsTOTAL == 52) {
+        noLoop();
+        fill(config.color.lightgreen);
+        noStroke();
+        textSize(54);
+        textAlign(CENTER, CENTER);
+        text("YOU WON!\nRefresh page to\nstart new game", config.app.width / 2, config.app.height / 2);
+    }
 }
 
 function mousePressed() {
