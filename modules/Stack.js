@@ -81,7 +81,7 @@ class Stack {
     }
 
     pushCard(card) {
-        _cards.splice(_cards.map(_card => {
+        cards.splice(cards.map(_card => {
             return _card.id;
         }).indexOf(card.id), 1);
         card.x = this.x;

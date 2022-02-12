@@ -1,5 +1,4 @@
 var config;
-var cards = [];
 var cardIcons = new Map();
 var draggedHeap = null;
 var draggedStack = null;
@@ -7,8 +6,7 @@ var stacks = [];
 var storages = [];
 var deck;
 
-var _suits = [ "clover", "diamond", "heart", "spade" ];
-var _cards = [];
+var cards = [];
 
 function preload() {
     config = loadJSON("config.json");
@@ -29,14 +27,15 @@ function setup() {
 
     for(var i = 0; i < 4; i++)
         for(var j = 0; j < 13; j++)
-            _cards.push(new Card(0, 0, _suits[i], j));
+            cards.push(new Card(0, 0, config.suits[i], j));
+    
     for(var i = 0, x = 10; i < 7; i++, x += config.card.width + config.card.stroke + config.stack.offset) {
         stacks.push(new Stack(x, config.stack.paddingY));
         for(var j = 0; j < i + 1; j++) {
             if((i + 1) - j == 1)
-                stacks[i].pushCard(_cards[getRandomInt(_cards.length)]);
+                stacks[i].pushCard(cards[getRandomInt(cards.length)]);
             else {  
-                var card = _cards[getRandomInt(_cards.length)];
+                var card = cards[getRandomInt(cards.length)];
                 card.setVisible(false);
                 stacks[i].pushCard(card);
             }
@@ -46,11 +45,11 @@ function setup() {
         storages.push(new Storage(x, 10));
     }
     deck = new Deck((config.card.width + config.card.stroke + config.stack.offset) * 6 + 10, 10);
-    for(var i = _cards.length; i > 0; i--) {
-        var card = _cards[getRandomInt(i)];
+    for(var i = cards.length; i > 0; i--) {
+        var card = cards[getRandomInt(i)];
         deck.addCard(card);
-        var idx = _cards.indexOf(card);
-        _cards = _cards.slice(0, idx).concat(_cards.slice(idx + 1));
+        var idx = cards.indexOf(card);
+        cards = cards.slice(0, idx).concat(cards.slice(idx + 1));
     }
 }
 
@@ -103,6 +102,7 @@ function mousePressed() {
                 }
             }
         });
+
         storages.forEach(storage => {
             if(storage.isInArea() && !storage.isEmpty()) {
                 draggedHeap = storage.getHeapOnFocus();
