@@ -3,6 +3,7 @@
 ### ✔️ Проект разработан на библиотеке p5.js
 
 ### [Ссылка на страниу с игрой]([borobeyka.github.io/Klondike-P5.JS/](https://borobeyka.github.io/Klondike-P5.JS/) "Ссылка на страниу с игрой")
+[a link](https://borobeyka.github.io/Klondike-P5.JS/)
 
 ### *Ниже представлены скриншоты игры*
 
